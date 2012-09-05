@@ -1,0 +1,166 @@
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <style>
+            .columnAlignTop {
+                vertical-align: text-top
+            }
+            .rightAlign {
+                float: right
+            }
+            .ratingParentTable {
+                width: 100%
+            }
+            .line {
+                width:100%; height: 2px; background-color: black
+            }
+        </style>
+    </h:head>
+
+    <h:body>
+        <f:view>
+
+            <h2>#{messages.viewTask}</h2>
+            <h:form enctype="multipart/form-data" prependId="false" id="base">
+
+                <table border="1">
+                    <thead>
+                        <td>
+                            #{messages.project}
+                        </td>
+                    </thead>
+                    <tr>
+                        <td class="columnAlignTop">#{messages.name}</td>
+                        <td>
+                            #{viewTaskController.project.name}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="columnAlignTop">#{messages.description}</td>
+                        <td>
+                            #{viewTaskController.project.description}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="columnAlignTop">#{messages.targets}</td>
+                        <td>
+                            #{viewTaskController.project.targets}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="columnAlignTop">#{messages.workloadEstimation}<em>h</em></td>
+                        <td>
+                            #{viewTaskController.project.workloadEstimation}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td class="columnAlignTop">#{messages.desiredOutputs}</td>
+                        <td>
+                            #{viewTaskController.project.desiredOutputs}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="columnAlignTop">#{messages.validFrom}</td>
+                        <td>
+                            #{viewTaskController.project.validFrom}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="columnAlignTop">#{messages.validTo}</td>
+                        <td>
+                            #{viewTaskController.project.validTo}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="columnAlignTop">#{messages.logonDeadline}</td>
+                        <td>
+                            #{viewTaskController.project.logonDeadline}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="columnAlignTop">#{messages.project}</td>
+                        <td>
+                            #{viewTaskController.project.project}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="columnAlignTop">#{messages.nominatedSubject}</td>
+                        <td>    
+                            #{viewTaskController.project.nominatedSubject}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="columnAlignTop">#{messages.sources}</td>
+                        <td>
+                            #{viewTaskController.project.sources}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="columnAlignTop">#{messages.attachments}</td>
+                        <td>
+                            <ui:repeat value="#{viewTaskController.attachments}" var="attachment">
+                                <h:panelGrid columns="1">
+                                    #{attachment.comment}
+                                    <p:commandLink value="Download attachment" actionListener="#{viewTaskController.downloadAttachment(attachment)}"/>
+                                </h:panelGrid>
+                            </ui:repeat>
+                        </td>
+                    </tr>
+
+                </table>
+
+                <table>
+                    <thead>
+                        <td>
+                            #{messages.roles}
+                        </td>
+                    </thead>
+                    <tr>
+                        <td>
+                            <ui:repeat value="#{viewTaskController.roles}" var="role" varStatus="status">
+                                <p:panel toggleable="true" closable="false" toggleSpeed="500" closeSpeed="500">                                         
+                                    <f:facet name="header">
+                                        #{role.name}
+                                        <p:spacer width="200" height="5" />
+                                        <p:commandButton value="#{messages.applyFor}" />
+                                    </f:facet>
+                                    #{role.description}
+                                    <ui:repeat value="#{role.necessarySkills}" var="skill">
+
+                                        <h:panelGrid columns="2" class="ratingParentTable">
+                                            <!-- -->
+                                            <h:panelGroup style="display: inline-block; float:right">
+                                                <div style="background-color: black; width:#{5 * 16 - viewTaskController.getSkillLevel(skill.name) * 16}px; height:1px; float:right"></div>
+
+                                                <div style="background-color: black; width:#{viewTaskController.getSkillLevel(skill.name) * 16}px; height:3px; float:right"></div>
+                                            </h:panelGroup>
+
+                                            #{skill.name}
+                                            <p:rating style="float:right" value="#{skill.level}" cancel="false" readonly="true" />
+
+
+                                        </h:panelGrid>
+                                    </ui:repeat>
+
+                                </p:panel>
+                            </ui:repeat>
+
+
+                        </td>
+                    </tr>
+                </table>
+            </h:form>
+
+
+
+
+        </f:view>
+
+    </h:body>
+
+</html>
