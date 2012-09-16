@@ -135,9 +135,8 @@
                                         <h:panelGrid columns="2" class="ratingParentTable">
                                             <!-- -->
                                             <h:panelGroup style="display: inline-block; float:right">
-                                                <div style="background-color: black; width:#{5 * 16 - viewTaskController.getSkillLevel(skill.name) * 16}px; height:1px; float:right"></div>
-
-                                                <div style="background-color: black; width:#{viewTaskController.getSkillLevel(skill.name) * 16}px; height:3px; float:right"></div>
+                                                <div style="height: 3px; width: #{5 * 16 - viewTaskController.getSkillLevel(skill.name) * 16}px; float: right" />
+                                                <div style="background-color: #{viewTaskController.decideColor(role.name, skill.name)}; width:#{viewTaskController.getSkillLevel(skill.name) * 16}px; height:3px; float:right"></div>
                                             </h:panelGroup>
 
                                             #{skill.name}

@@ -11,6 +11,8 @@ import cz.cvut.taskdetail.dto.SkillDto;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -34,6 +36,9 @@ public class ViewTaskController {
     private List<RoleDto> roles;
     private List<SkillDto> mySkills;
     private List<AttachmentDto> attachments;
+    
+    private static String GREEN_COLOR = "green";
+    private static String RED_COLOR = "red";
 
     /**
      * Creates a new instance of ViewTaskController
@@ -87,19 +92,48 @@ public class ViewTaskController {
         
         roles = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
+            List<SkillDto> dest = new ArrayList<>();
+            for (SkillDto skill : mySkills) {
+                SkillDto s = new SkillDto();
+                s.setLevel(skill.getLevel());
+                s.setName(skill.getName());
+                dest.add(s);
+            }
             RoleDto role = new RoleDto();
             role.setId("Role" + i);
             role.setName("Role name " + i);
-            role.setNecessarySkills(sampleSkills);
+            role.setNecessarySkills(dest);
             role.setDescription("askldfjklasdfjlkasdjflkjvz\nasdklfjaskldfjklasdfjklasdjfzvmzvnm,nvkasldfjlkasdjf");
             roles.add(role);
+        }
+        mySkills.get(3).setLevel(1);
+    }
+    
+    public String decideColor(String roleName, String skillName) {
+        int mySkillLevel = getSkillLevel(skillName);
+        int requiredSkillLevel = getRoleSkillLevel(roleName, skillName);
+        if (mySkillLevel >= requiredSkillLevel) {
+            return GREEN_COLOR;
+        } else {
+            return RED_COLOR;
         }
     }
     
     public int getSkillLevel(String skillName) {
-        for(SkillDto skill : mySkills) {
+        for (SkillDto skill : mySkills) {
             if (skill.getName().equals(skillName)) {
                 return skill.getLevel();
+            }
+        }
+        return 0;
+    }
+    
+    public int getRoleSkillLevel(String roleName, String skillName) {
+        for (RoleDto role : roles) {
+            for (SkillDto skill : role.getNecessarySkills()) {
+                if (role.getName().equals(roleName) && skill.getName().equals(skillName)) {
+                    return skill.getLevel();
+                }
             }
         }
         return 0;
