@@ -10,9 +10,10 @@
        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 
 
-    <!--//// Base configuration of Spring’s Context ////-->
+	<import resource="classpath*:workflow-common.xml" />
 
-    <context:annotation-config />
-    <context:component-scan base-package="cz.cvut.applyforassignmentportlet" />
+    <!--//// Base configuration of Spring’s Context ////-->
+	
+<!--     <context:component-scan base-package="cz.cvut.applyforassignmentportlet.integration" /> -->
     
 </beans>
