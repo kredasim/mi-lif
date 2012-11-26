@@ -48,8 +48,6 @@ public class ViewTaskController implements Serializable {
     private static String GREEN_COLOR = "green";
     private static String RED_COLOR = "red";
 
-    @ManagedProperty(value = "#{activitiLibrary}")
-    private ActivitiLibrary activitiLibrary;
     /**
      * Creates a new instance of ViewTaskController
      */
@@ -184,12 +182,4 @@ public class ViewTaskController implements Serializable {
     public void setAttachments(List<AttachmentDto> attachments) {
         this.attachments = attachments;
     }
-
-	public ActivitiLibrary getActivitiLibrary() {
-		return activitiLibrary;
-	}
-
-	public void setActivitiLibrary(ActivitiLibrary activitiLibrary) {
-		this.activitiLibrary = activitiLibrary;
-	}
 }

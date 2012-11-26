@@ -10,7 +10,7 @@
        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 
 
-	<import resource="classpath*:workflow-common.xml" />
+	<import resource="classpath:workflow-common.xml" />
 
     <!--//// Base configuration of Spring’s Context ////-->
 	
