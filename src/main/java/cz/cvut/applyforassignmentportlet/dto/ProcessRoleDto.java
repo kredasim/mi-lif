@@ -10,7 +10,7 @@ import java.util.List;
  *
  * @author simo
  */
-public class RoleDto {
+public class ProcessRoleDto {
 
     private String id;
     private String name;

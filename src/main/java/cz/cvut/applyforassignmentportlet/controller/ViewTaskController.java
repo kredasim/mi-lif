@@ -22,14 +22,20 @@ import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
 import cz.cvut.applyforassignmentportlet.dto.AttachmentDto;
+import cz.cvut.applyforassignmentportlet.dto.ProcessRoleDto;
 import cz.cvut.applyforassignmentportlet.dto.ProjectDto;
-import cz.cvut.applyforassignmentportlet.dto.RoleDto;
 import cz.cvut.applyforassignmentportlet.dto.SkillDto;
-import cz.cvut.fit.industry.api.service.ActivitiLibrary;
+import cz.cvut.fit.industry.api.WorkflowConstants;
+import cz.cvut.fit.industry.api.dto.RoleDto;
+import cz.cvut.fit.workflow.common.WorkflowService;
 
 /**
  *
  * @author simo
+ */
+/**
+ * @author Simeon Kredatus
+ *
  */
 @ManagedBean
 @ViewScoped
@@ -41,13 +47,15 @@ public class ViewTaskController implements Serializable {
 	private static final long serialVersionUID = 9037053633902916249L;
 	
 	private ProjectDto project;
-    private List<RoleDto> roles;
+    private List<ProcessRoleDto> roles;
     private List<SkillDto> mySkills;
     private List<AttachmentDto> attachments;
     
     private static String GREEN_COLOR = "green";
     private static String RED_COLOR = "red";
 
+    @ManagedProperty("#{workflowService}")
+    private WorkflowService workflowService;
     /**
      * Creates a new instance of ViewTaskController
      */
@@ -73,7 +81,29 @@ public class ViewTaskController implements Serializable {
         initAttachments();
     }
 
-    public void initAttachments() {
+    //TODO finish after the method of parameter parsing will be known.
+    /**
+     * Method starts new process instance of process called {@link WorkflowConstants.APPLY_FOR_TASK_PROCESS_KEY}.
+     * Then the usertask 1 is executed to apply for the offered role.
+     * @param roleId
+     */
+    public void applyFor(int roleId) {
+    	String processId = workflowService.createTask(WorkflowConstants.APPLY_FOR_TASK_PROCESS_KEY);
+    	RoleDto role = convertToRoleDto(roles.get(roleId));
+    	workflowService.completeTaskByProcessId(processId, null);
+    }
+    /** 
+	 * @param processRoleDto
+	 * @return
+	 */
+	private RoleDto convertToRoleDto(ProcessRoleDto processRoleDto) {
+		RoleDto dto = new RoleDto();
+		dto.setDescription(processRoleDto.getDescription());
+		dto.setName(processRoleDto.getName());
+		return dto;
+	}
+
+	public void initAttachments() {
         attachments = new ArrayList<AttachmentDto>();
 
         InputStream stream = ((PortletContext) FacesContext.getCurrentInstance().getExternalContext().getContext()).getResourceAsStream("/text.txt");
@@ -97,7 +127,7 @@ public class ViewTaskController implements Serializable {
         }
         mySkills = sampleSkills;
         
-        roles = new ArrayList<RoleDto>();
+        roles = new ArrayList<ProcessRoleDto>();
         for (int i = 0; i < 10; i++) {
             List<SkillDto> dest = new ArrayList<SkillDto>();
             for (SkillDto skill : mySkills) {
@@ -106,7 +136,7 @@ public class ViewTaskController implements Serializable {
                 s.setName(skill.getName());
                 dest.add(s);
             }
-            RoleDto role = new RoleDto();
+            ProcessRoleDto role = new ProcessRoleDto();
             role.setId("Role" + i);
             role.setName("Role name " + i);
             role.setNecessarySkills(dest);
@@ -136,7 +166,7 @@ public class ViewTaskController implements Serializable {
     }
     
     public int getRoleSkillLevel(String roleName, String skillName) {
-        for (RoleDto role : roles) {
+        for (ProcessRoleDto role : roles) {
             for (SkillDto skill : role.getNecessarySkills()) {
                 if (role.getName().equals(roleName) && skill.getName().equals(skillName)) {
                     return skill.getLevel();
@@ -167,11 +197,11 @@ public class ViewTaskController implements Serializable {
         this.project = project;
     }
 
-    public List<RoleDto> getRoles() {
+    public List<ProcessRoleDto> getRoles() {
         return roles;
     }
 
-    public void setRoles(List<RoleDto> roles) {
+    public void setRoles(List<ProcessRoleDto> roles) {
         this.roles = roles;
     }
 
@@ -182,4 +212,13 @@ public class ViewTaskController implements Serializable {
     public void setAttachments(List<AttachmentDto> attachments) {
         this.attachments = attachments;
     }
+
+	public WorkflowService getWorkflowService() {
+		return workflowService;
+	}
+
+	public void setWorkflowService(WorkflowService workflowService) {
+		this.workflowService = workflowService;
+	}
+    
 }

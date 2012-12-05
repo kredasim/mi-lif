@@ -126,7 +126,7 @@
                                     <f:facet name="header">
                                         #{role.name}
                                         <p:spacer width="200" height="5" />
-                                        <p:commandButton value="#{messages.applyFor}" />
+                                        <p:commandButton value="#{messages.applyFor}" action="#{viewTaskController.applyFor(status.index)}"/>
                                     </f:facet>
                                     #{role.description}
                                     <ui:repeat value="#{role.necessarySkills}" var="skill">
