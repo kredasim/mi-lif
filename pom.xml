@@ -35,7 +35,7 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>cz.cvut.fit</groupId>
+			<groupId>cz.cvut.fit.bpm</groupId>
 			<artifactId>workflow-common</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>

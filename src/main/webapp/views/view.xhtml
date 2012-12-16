@@ -35,74 +35,74 @@
                     <tr>
                         <td class="columnAlignTop">#{messages.name}</td>
                         <td>
-                            #{viewTaskController.project.name}
+                            #{viewTaskController.task.title}
                         </td>
                     </tr>
                     <tr>
                         <td class="columnAlignTop">#{messages.description}</td>
                         <td>
-                            #{viewTaskController.project.description}
+                            #{viewTaskController.task.description}
                         </td>
                     </tr>
                     <tr>
                         <td class="columnAlignTop">#{messages.targets}</td>
                         <td>
-                            #{viewTaskController.project.targets}
+                            #{viewTaskController.task.goals}
                         </td>
                     </tr>
                     <tr>
                         <td class="columnAlignTop">#{messages.workloadEstimation}<em>h</em></td>
                         <td>
-                            #{viewTaskController.project.workloadEstimation}
+                            #{viewTaskController.task.workIntensity}
                         </td>
                     </tr>
 
                     <tr>
                         <td class="columnAlignTop">#{messages.desiredOutputs}</td>
                         <td>
-                            #{viewTaskController.project.desiredOutputs}
+                            #{viewTaskController.task.outputs}
                         </td>
                     </tr>
                     <tr>
                         <td class="columnAlignTop">#{messages.validFrom}</td>
                         <td>
-                            #{viewTaskController.project.validFrom}
+                            #{viewTaskController.task.validFrom}
                         </td>
                     </tr>
                     <tr>
                         <td class="columnAlignTop">#{messages.validTo}</td>
                         <td>
-                            #{viewTaskController.project.validTo}
+                            #{viewTaskController.task.validTo}
                         </td>
                     </tr>
                     <tr>
                         <td class="columnAlignTop">#{messages.logonDeadline}</td>
                         <td>
-                            #{viewTaskController.project.logonDeadline}
+                            #{viewTaskController.task.registrationEnd}
                         </td>
                     </tr>
                     <tr>
                         <td class="columnAlignTop">#{messages.project}</td>
                         <td>
-                            #{viewTaskController.project.project}
+                            #{viewTaskController.task.project.name}
                         </td>
                     </tr>
                     <tr>
                         <td class="columnAlignTop">#{messages.nominatedSubject}</td>
                         <td>    
-                            #{viewTaskController.project.nominatedSubject}
+                            #{viewTaskController.task.subjects}
                         </td>
                     </tr>
                     <tr>
                         <td class="columnAlignTop">#{messages.sources}</td>
                         <td>
-                            #{viewTaskController.project.sources}
+                            #{viewTaskController.task.sources}
                         </td>
                     </tr>
                     <tr>
                         <td class="columnAlignTop">#{messages.attachments}</td>
                         <td>
-                            <ui:repeat value="#{viewTaskController.attachments}" var="attachment">
+                            <ui:repeat value="#{viewTaskController.task.attachments}" var="attachment">
                                 <h:panelGrid columns="1">
                                     #{attachment.comment}
                                     <p:commandLink value="Download attachment" actionListener="#{viewTaskController.downloadAttachment(attachment)}"/>
@@ -121,25 +121,25 @@
                     </thead>
                     <tr>
                         <td>
-                            <ui:repeat value="#{viewTaskController.roles}" var="role" varStatus="status">
+                            <ui:repeat value="#{viewTaskController.task.roles}" var="role" varStatus="status">
                                 <p:panel toggleable="true" closable="false" toggleSpeed="500" closeSpeed="500">                                         
                                     <f:facet name="header">
-                                        #{role.name}
+                                        #{role.role.name}
                                         <p:spacer width="200" height="5" />
                                         <p:commandButton value="#{messages.applyFor}" action="#{viewTaskController.applyFor(status.index)}"/>
                                     </f:facet>
-                                    #{role.description}
-                                    <ui:repeat value="#{role.necessarySkills}" var="skill">
+                                    #{role.role.description}
+                                    <ui:repeat value="#{role.skillDtoList}" var="skill">
 
                                         <h:panelGrid columns="2" class="ratingParentTable">
                                             <!-- -->
                                             <h:panelGroup style="display: inline-block; float:right">
-                                                <div style="height: 3px; width: #{5 * 16 - viewTaskController.getSkillLevel(skill.name) * 16}px; float: right" />
-                                                <div style="background-color: #{viewTaskController.decideColor(role.name, skill.name)}; width:#{viewTaskController.getSkillLevel(skill.name) * 16}px; height:3px; float:right"></div>
+                                                <div style="height: 3px; width: #{5 * 16 - viewTaskController.getSkillLevel(skill.type) * 16}px; float: right" />
+                                                <div style="background-color: #{viewTaskController.decideColor(role.role.name, skill.type)}; width:#{viewTaskController.getSkillLevel(skill.type) * 16}px; height:3px; float:right"></div>
                                             </h:panelGroup>
 
-                                            #{skill.name}
-                                            <p:rating style="float:right" value="#{skill.level}" cancel="false" readonly="true" />
+                                            #{skill.type}
+                                            <p:rating style="float:right" value="#{skill.rating}" cancel="false" readonly="true" />
 
 
                                         </h:panelGrid>
