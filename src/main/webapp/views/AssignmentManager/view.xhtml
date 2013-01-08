@@ -1,0 +1,48 @@
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<style>
+.columnAlignTop {
+	vertical-align: text-top
+}
+
+.rightAlign {
+	float: right
+}
+
+.ratingParentTable {
+	width: 100%
+}
+
+.line {
+	width: 100%;
+	height: 2px;
+	background-color: black
+}
+</style>
+</h:head>
+
+<h:body>
+	<f:view>
+		Currently available tasks:
+		<h:form>
+			<p:dataTable id="dataTable" var="task"
+				value="#{assignmentManagerViewController.tasks}" paginator="true"
+				rows="#{assignmentManagerViewController.defaultAssignmentsCount}"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="5,10,15">
+				<h:commandLink
+					action="#{assignmentManagerViewController.view(task.id)}"
+					value="#{task.title}" />
+				<br />
+			</p:dataTable>
+		</h:form>
+	</f:view>
+
+</h:body>
+
+</html>

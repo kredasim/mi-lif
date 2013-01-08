@@ -4,5 +4,7 @@
 <display>
     <category name="Wirefram 02 series">
         <portlet id="ApplyForAssignmentPortlet" />
+        <portlet id="LookForAssignment" />
+        <portlet id="AssignmentManager" />
     </category>
 </display>

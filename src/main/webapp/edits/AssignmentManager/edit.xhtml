@@ -29,7 +29,7 @@
 <h:body>
 	<f:view>
 		<h2>#{messages.viewTask}</h2>
-		<h:form enctype="multipart/form-data" prependId="false" id="base" rendered="#{viewTaskController.task != null}">
+		<h:form id="base">
 
 			<table border="1">
 				<thead>
@@ -37,68 +37,59 @@
 				</thead>
 				<tr>
 					<td class="columnAlignTop">#{messages.name}</td>
-					<td>#{viewTaskController.task.title}</td>
+					<td><p:inputText value="#{assignmentManager.dto.title}" /></td>
 				</tr>
 				<tr>
 					<td class="columnAlignTop">#{messages.description}</td>
-					<td>#{viewTaskController.task.description}</td>
+					<td><p:inputText value="#{assignmentManager.dto.description}" /></td>
 				</tr>
 				<tr>
 					<td class="columnAlignTop">#{messages.targets}</td>
-					<td>#{viewTaskController.task.goals}</td>
+					<td><p:inputText value="#{assignmentManager.dto.goals}" /></td>
 				</tr>
 				<tr>
 					<td class="columnAlignTop">#{messages.workloadEstimation}<em>h</em></td>
-					<td>#{viewTaskController.task.workIntensity}</td>
+					<td><p:inputText
+							value="#{assignmentManager.dto.workIntensity}" /></td>
 				</tr>
 
 				<tr>
 					<td class="columnAlignTop">#{messages.desiredOutputs}</td>
-					<td>#{viewTaskController.task.outputs}</td>
+					<td><p:inputText value="#{assignmentManager.dto.outputs}" /></td>
 				</tr>
 				<tr>
 					<td class="columnAlignTop">#{messages.validFrom}</td>
-					<td>#{viewTaskController.task.validFrom}</td>
+					<td><p:calendar value="#{assignmentManager.dto.validFrom}"
+							 /></td>
 				</tr>
 				<tr>
 					<td class="columnAlignTop">#{messages.validTo}</td>
-					<td>#{viewTaskController.task.validTo}</td>
+					<td><p:calendar value="#{assignmentManager.dto.validTo}"
+							/></td>
 				</tr>
 				<tr>
 					<td class="columnAlignTop">#{messages.logonDeadline}</td>
-					<td>#{viewTaskController.task.registrationEnd}</td>
+					<td><p:calendar
+							value="#{assignmentManager.dto.registrationEnd}" /></td>
 				</tr>
 				<tr>
 					<td class="columnAlignTop">#{messages.project}</td>
-					<td>#{viewTaskController.task.project.name}</td>
+					<td><p:inputText value="#{assignmentManager.dto.project.name}" /></td>
 				</tr>
 				<tr>
 					<td class="columnAlignTop">#{messages.nominatedSubject}</td>
-					<td>#{viewTaskController.task.subjects}</td>
+					<td><p:inputText value="#{assignmentManager.dto.subjects}" /></td>
 				</tr>
 				<tr>
 					<td class="columnAlignTop">#{messages.sources}</td>
-					<td>#{viewTaskController.task.sources}</td>
+					<td><p:inputText value="#{assignmentManager.dto.sources}" /></td>
 				</tr>
 				<tr>
-					<td class="columnAlignTop">#{messages.attachments}</td>
-					<td><ui:repeat value="#{viewTaskController.task.attachments}"
-							var="attachment">
-							<h:panelGrid columns="1">
-                                    #{attachment.comment}
-                                    <p:commandLink
-									value="Download attachment"
-									actionListener="#{viewTaskController.downloadAttachment(attachment)}" />
-							</h:panelGrid>
-						</ui:repeat></td>
+					<td><p:commandButton
+							actionListener="#{assignmentManager.save}" value="Save" ajax="false" /></td>
 				</tr>
-
 			</table>
 		</h:form>
-
-
-
-
 	</f:view>
 
 </h:body>

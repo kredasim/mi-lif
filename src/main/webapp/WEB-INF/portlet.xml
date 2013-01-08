@@ -1,49 +1,134 @@
 <?xml version="1.0"?>
 <portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
-             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-             xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
-             version="2.0">
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
+	version="2.0">
 
-    <portlet>
-        <portlet-name>ApplyForAssignmentPortlet</portlet-name>
-        <display-name>ApplyForAssignmentPortlet</display-name>
-        <portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
+	<portlet>
+		<portlet-name>ApplyForAssignmentPortlet</portlet-name>
+		<display-name>ApplyForAssignmentPortlet</display-name>
+		<portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
 
-        <init-param>
-            <name>javax.portlet.faces.defaultViewId.view</name>
-            <value>/views/view.xhtml</value>
-        </init-param>
-        <init-param>
-            <name>javax.portlet.faces.defaultViewId.edit</name>
-            <value>/edits/edit.xhtml</value>
-        </init-param>
+		<init-param>
+			<name>javax.portlet.faces.defaultViewId.view</name>
+			<value>/views/view.xhtml</value>
+		</init-param>
+		<!-- <init-param> -->
+		<!-- <name>javax.portlet.faces.bridgePublicRenderParameterHandler</name> -->
+		<!-- <value>cz.cvut.applyforassignmentportlet.controller.AssignmentIdParameterHandler</value> -->
+		<!-- </init-param> -->
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>view</portlet-mode>
+		</supports>
 
-        <supports>
-            <mime-type>text/html</mime-type>
-            <portlet-mode>view</portlet-mode>
-            <portlet-mode>edit</portlet-mode>
-        </supports>
+		<supported-locale>en</supported-locale>
+		<supported-locale>cs</supported-locale>
 
-        <supported-locale>en</supported-locale>
-        <supported-locale>cs</supported-locale>
+		<portlet-info>
+			<title>ApplyForAssignmentPortlet</title>
+			<short-title>ApplyForAssignmentPortlet</short-title>
+			<keywords>JSF 2.0</keywords>
+		</portlet-info>
 
-        <portlet-info>
-            <title>ApplyForAssignmentPortlet</title>
-            <short-title>ApplyForAssignmentPortlet</short-title>
-            <keywords>JSF 2.0</keywords>
-        </portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+		<supported-public-render-parameter>assignmentId</supported-public-render-parameter>
+	</portlet>
 
-        <security-role-ref>
-            <role-name>administrator</role-name>
-        </security-role-ref>
-        <security-role-ref>
-            <role-name>guest</role-name>
-        </security-role-ref>
-        <security-role-ref>
-            <role-name>power-user</role-name>
-        </security-role-ref>
-        <security-role-ref>
-            <role-name>user</role-name>
-        </security-role-ref>
-    </portlet>
+
+	<portlet>
+		<portlet-name>LookForAssignment</portlet-name>
+		<display-name>LookForAssignment</display-name>
+		<portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
+
+		<init-param>
+			<name>javax.portlet.faces.defaultViewId.view</name>
+			<value>/views/lookforassignment/view.xhtml</value>
+		</init-param>
+
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>view</portlet-mode>
+		</supports>
+
+		<supported-locale>en</supported-locale>
+		<supported-locale>cs</supported-locale>
+
+		<portlet-info>
+			<title>LookForAssignment</title>
+			<short-title>LookForAssignment</short-title>
+			<keywords>JSF 2.0</keywords>
+		</portlet-info>
+	</portlet>
+
+	<portlet>
+		<portlet-name>AssignmentManager</portlet-name>
+		<display-name>AssignmentManager</display-name>
+		<portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
+
+		<init-param>
+			<name>javax.portlet.faces.defaultViewId.view</name>
+			<value>/views/AssignmentManager/view.xhtml</value>
+		</init-param>
+		<init-param>
+			<name>javax.portlet.faces.defaultViewId.edit</name>
+			<value>/edits/AssignmentManager/edit.xhtml</value>
+		</init-param>
+		<init-param>
+			<name>javax.portlet.faces.defaultViewId.asdf</name>
+			<value>/helps/AssignmentManager/help.xhtml</value>
+		</init-param>
+
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>view</portlet-mode>
+			<portlet-mode>edit</portlet-mode>
+			<portlet-mode>help</portlet-mode>
+		</supports>
+
+		<supported-locale>en</supported-locale>
+		<supported-locale>cs</supported-locale>
+
+		<portlet-info>
+			<title>AssignmentManager</title>
+			<short-title>AssignmentManager</short-title>
+			<keywords>JSF 2.0</keywords>
+		</portlet-info>
+
+		<portlet-preferences>
+			<preference>
+				<name>defaultAssignmentsCount</name>
+				<value>10</value>
+			</preference>
+		</portlet-preferences>
+		
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+		<supported-public-render-parameter>assignmentId</supported-public-render-parameter>
+	</portlet>
+	<public-render-parameter>
+		<identifier>assignmentId</identifier>
+		<qname xmlns:l="http://fit.cvut.cz">l:assignmentId</qname>
+	</public-render-parameter>
 </portlet-app>

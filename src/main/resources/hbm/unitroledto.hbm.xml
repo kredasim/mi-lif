@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="cz.cvut.fit.bpm.api.dto.UnitRoleDto">
+		<id column="UNITROLE_ID" name="id" type="java.lang.Long">
+			<generator class="increment" />
+		</id>
+		<property name="role" type="cz.cvut.fit.bpm.api.dto.RoleDto"
+			column="ROLE" />
+		<property name="description" type="java.lang.String" column="DESCRIPTION" />
+
+		<list name="skillDtoList" table="UnitRoleSkills">
+			<key column="id" />
+			<list-index column="sortOrder" />
+			<many-to-many column="skillId" unique="true"
+				class="cz.cvut.fit.bpm.api.dto.SkillDto" />
+		</list>
+
+	</class>
+</hibernate-mapping>

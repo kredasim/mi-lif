@@ -1,0 +1,182 @@
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <h:head>
+        <style>
+            .hidden {
+                display: none
+            }
+            .shown {
+                display: block
+            }
+        </style>
+
+        <script type="text/javascript">
+            function switchVisibility(sectionId) {
+                var element = document.getElementById(sectionId);
+                if (element.className == "shown") {
+                    element.className = "hidden";
+                } else {
+                    element.className = "shown";
+                }
+            }
+        </script>
+    </h:head>
+    <h:body>
+        <f:view>
+            <h:form id="search">
+                <h:panelGrid columns="4" border="1">
+
+                    <p:inputText id="searchQuery" />
+
+                    <p:commandButton value="V" onclick="switchVisibility('advancedSearchDiv')"/>
+
+                    <p:spacer width="30" height="1" />
+
+                    <p:commandButton value="#{messages.search}" ajax="true" process="@all" 
+                                     update=":search:parent"  actionListener="#{searchController.search}"/>
+                </h:panelGrid>
+                <div id="advancedSearchDiv" class="hidden">
+                    <p:panelGrid id="advancedSearch">
+                        <p:row>
+                            <p:column>
+                                #{messages.departmentOrSubject}
+                            </p:column>
+
+                            <p:column>
+                                <p:autoComplete value="#{searchController.selectedSubjects}" completeMethod="#{searchController.departmentOrSubjectComplete}" multiple="true"/>  
+
+                            </p:column>
+                        </p:row>                    
+                        <p:row>
+                            <p:column>
+                                #{messages.workloadHours}
+                            </p:column>
+
+                            <p:column>
+                                <p:panelGrid columns="4">
+                                    <p:outputLabel for="min" value="Min" />
+                                    <p:inputText id="min" >
+
+                                    </p:inputText>
+
+                                    <p:outputLabel for="max" value="Max">
+
+                                    </p:outputLabel>
+                                    <p:inputText id="max" />
+                                </p:panelGrid>
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>
+                                #{messages.validTo}
+                            </p:column>
+
+                            <p:column>
+                                <p:calendar id="validTo" />
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>
+                                #{messages.assignmentStatus}
+                            </p:column>
+
+                            <p:column>
+                                <h:panelGrid columns="2">
+                                    <h:panelGroup>
+                                        <p:selectBooleanCheckbox id="published"/> 
+                                        <p:outputLabel for="published" value="#{messages.published}" />
+                                    </h:panelGroup>
+
+                                    <!-- -->
+
+                                    <h:panelGroup>
+                                        <p:selectBooleanCheckbox id="closed"/> 
+                                        <p:outputLabel for="closed" value="#{messages.closed}" />
+                                    </h:panelGroup>
+
+                                    <h:panelGroup>
+                                        <p:selectBooleanCheckbox id="handedOver"/> 
+                                        <p:outputLabel for="handedOver" value="#{messages.handedOver}" />
+                                    </h:panelGroup>
+
+                                </h:panelGrid>
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>
+                                #{messages.skills}
+                            </p:column>
+
+                            <p:column>
+                                <p:inputText id="skillsId" />
+                            </p:column>
+                        </p:row>
+
+                    </p:panelGrid>
+                </div>
+                <h:panelGroup id="parent" >
+                    <h:panelGroup rendered="#{searchController.hasSearched() == true}" id="searchResults">
+                        <h:panelGroup>
+                            <p:commandButton process="@this" update="searchDataGrid" value="#{messages.relevance}" actionListener="#{searchController.sortByRelevance}"/>
+                            <p:commandButton process="@this" update="searchDataGrid" value="#{messages.workloadEstimation}" actionListener="#{searchController.sortByWorkload}" />
+                            <p:commandButton process="@this" update="searchDataGrid" value="#{messages.reward}" actionListener="#{searchController.sortByReward}"/>
+                        </h:panelGroup>
+                        <p:dataGrid var="project" value="#{searchController.projects}" columns="2"
+                                    rows="4"
+                                    paginator="true" 
+                                    paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                    id="searchDataGrid" >
+                            <p:panelGrid>
+                                <f:facet name="header">
+                                    <p:row>
+                                        <p:column>
+                                            <h:outputText value="#{project.name}" />
+                                        </p:column>
+                      
+                                        <p:column>
+                                            <p:commandButton value="X" />
+                                        </p:column>
+                                    </p:row>
+                                </f:facet>
+                                
+                                <p:row>
+                                    <p:column>
+                                        #{project.workload} h, #{project.reward},-
+                                    </p:column>
+                                    <p:column rowspan="2">
+                                        <img src="#{project.logoUrl}" width="40" height="50" />
+                                    </p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column>
+                                        <ui:repeat var="role" value="#{project.roles}" varStatus="roleStatus" >
+                                            <h:panelGrid columns="2" rendered="#{searchController.isInLimit(roleStatus.index)}">
+                                                #{role.name}
+                                                
+                                                <h:panelGroup>
+                                                    <ui:repeat var="skill" value="#{role.necessarySkills}" varStatus="skillStatus">
+                                                        <h:outputText value="#{skill.name}" rendered="#{searchController.isInLimit(skillStatus.index)}" />
+                                                    </ui:repeat>
+                                                </h:panelGroup>
+                                            </h:panelGrid>
+                                        </ui:repeat>
+                                    </p:column>
+                                </p:row>
+
+
+                                <h:outputText value="#{project.description}" />
+                            </p:panelGrid>
+                        </p:dataGrid>
+                    </h:panelGroup>
+                </h:panelGroup>
+            </h:form>
+
+        </f:view>
+    </h:body>
+</html>
+

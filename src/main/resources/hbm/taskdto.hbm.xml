@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="cz.cvut.fit.bpm.api.dto.TaskDto">
+		<id column="PROJECT_ID" name="id" type="java.lang.Long">
+			<generator class="increment" />
+		</id>
+		<property name="title" column="TITLE" type="java.lang.String" />
+		<property name="description" column="DESCRIPTION" type="java.lang.String" />
+		<property name="goals" column="GOALS" type="java.lang.String" />
+		<property name="workIntensity" column="WORK_INTENSITY" type="java.lang.Integer" />
+		<property name="studentReward" column="STUDENT_REWARD" type="java.lang.Integer" />
+		<property name="outputs" column="OUTPUTS" type="java.lang.String" />
+		<property name="today" column="TODAY" type="date" />
+		<property name="validFrom" column="FROM_DATE" type="date" />
+		<property name="validTo" column="VALIDTO" type="date" />
+		<property name="registrationEnd" column="REGISTRATION_END"
+			type="date" />
+		<property name="sources" column="SOURCES" type="java.lang.String" />
+		<property name="requirements" column="REQUIREMENTS" type="java.lang.String" />
+		<property name="subjects" column="SUBJECTS" type="java.lang.String" />
+
+		<property name="project" type="cz.cvut.fit.bpm.api.dto.ProjectDto"
+			column="PROJECT" />
+
+		<list name="roles" table="TaskRoles">
+			<key column="id" />
+			<list-index column="sortOrder" />
+			<many-to-many column="roleId" unique="true" class="cz.cvut.fit.bpm.api.dto.UnitRoleDto" />
+		</list>
+		
+		<list name="attachments" table="TaskAttachment">
+			<key column="id" />
+			<list-index column="sortOrder" />
+			<many-to-many column="attachmentId" unique="true" class="cz.cvut.fit.bpm.api.dto.AttachmentDto" />
+		</list>
+
+	</class>
+</hibernate-mapping>
