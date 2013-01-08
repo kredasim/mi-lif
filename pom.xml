@@ -106,16 +106,16 @@
 
 
 		<!-- ACTIVITI -->
-		<dependency>
-			<groupId>cz.cvut.fit.industry</groupId>
-			<artifactId>industry-activiti-library</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>org.activiti</groupId>
-			<artifactId>activiti-engine</artifactId>
-			<version>5.10</version>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>cz.cvut.fit.industry</groupId> -->
+<!-- 			<artifactId>industry-activiti-library</artifactId> -->
+<!-- 			<version>0.0.1-SNAPSHOT</version> -->
+<!-- 		</dependency> -->
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.activiti</groupId> -->
+<!-- 			<artifactId>activiti-engine</artifactId> -->
+<!-- 			<version>5.10</version> -->
+<!-- 		</dependency> -->
 
 		<!--////////// Test scope ////////// -->
 

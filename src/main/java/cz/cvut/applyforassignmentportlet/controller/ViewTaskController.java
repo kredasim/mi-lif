@@ -27,7 +27,7 @@ import cz.cvut.fit.bpm.api.dto.UnitRoleDto;
 import cz.cvut.fit.bpm.api.service.TaskDtoService;
 import cz.cvut.fit.bpm.common.PortletCommonUtils;
 import cz.cvut.fit.bpm.common.WorkflowService;
-import cz.cvut.fit.industry.api.WorkflowConstants;
+//import cz.cvut.fit.industry.api.WorkflowConstants;
 import cz.cvut.portlet.common.CommonConstants;
 
 /**
