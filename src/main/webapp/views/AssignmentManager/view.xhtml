@@ -28,18 +28,20 @@
 
 <h:body>
 	<f:view>
-		Currently available tasks:
+		#{assignmentManagerViewController.greeting}
+		<br />
+		<h:outputText value="You're being logged into the liferay instance which has deployed the hook login counter for the:" rendered="#{assignmentManagerViewController.loggedIn}" />
+		<h:outputText value="#{assignmentManagerViewController.loginCount}" rendered="#{assignmentManagerViewController.loggedIn}" />
 		<h:form>
-			<p:dataTable id="dataTable" var="task"
-				value="#{assignmentManagerViewController.tasks}" paginator="true"
-				rows="#{assignmentManagerViewController.defaultAssignmentsCount}"
-				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-				rowsPerPageTemplate="5,10,15">
-				<h:commandLink
-					action="#{assignmentManagerViewController.view(task.id)}"
-					value="#{task.title}" />
-				<br />
-			</p:dataTable>
+			<h:panelGrid border="1"
+				columns="3">
+				<ui:repeat var="task" varStatus="status"
+					value="#{assignmentManagerViewController.tasks}">
+					<p:commandButton ajax="false"
+						action="#{assignmentManagerViewController.view(task.id)}"
+						value="#{task.title}" />
+				</ui:repeat>
+			</h:panelGrid>
 		</h:form>
 	</f:view>
 

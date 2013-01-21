@@ -25,7 +25,9 @@ import com.liferay.portlet.PortletPreferencesFactoryUtil;
 
 import cz.cvut.applyforassignmentportlet.service.PersistentDtoService;
 import cz.cvut.fit.bpm.api.dto.TaskDto;
+import cz.cvut.hook.LoginCounterHook;
 import cz.cvut.portlet.common.CommonConstants;
+import cz.cvut.portlet.common.CommonUtils;
 
 /**
  * @author Simeon Kredatus
@@ -48,7 +50,7 @@ public class AssignmentManagerViewController {
 		}
 	}
 
-	public int getDefaultAssignmentsCount() throws SystemException, PortalException {
+	public String getGreeting() throws SystemException, PortalException {
 		// load from portlet prefferences
 		ExternalContext extcontext = FacesContext.getCurrentInstance().getExternalContext();
 		RenderRequest renderRequest = (RenderRequest) extcontext.getRequest();
@@ -60,13 +62,19 @@ public class AssignmentManagerViewController {
 			pref = PortletPreferencesFactoryUtil.getPortletSetup(
 					request, portletResource);
 		}
-		String val = pref.getValue("defaultAssignmentsCount", "1");
-		Integer ret = Integer.parseInt(val);
-		return ret.intValue();
+		String val = pref.getValue("greeting", "Hello, this is default greeting");
+		return val;
 	}
 
+	public String getLoginCount() {
+		return Integer.toString(LoginCounterHook.COUNT);
+	}
+	public boolean isLoggedIn() {
+		return CommonUtils.getThemeDisplay().isSignedIn();
+	}
 	public List<TaskDto> getTasks() {
-		return persistentDtoService.getAll();
+		List<TaskDto> ret = persistentDtoService.getAll();
+		return ret;
 	}
 
 	public PersistentDtoService<TaskDto> getPersistentDtoService() {

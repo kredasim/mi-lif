@@ -27,68 +27,83 @@
 </h:head>
 
 <h:body>
+
 	<f:view>
+		<f:metadata>
+			<f:event listener="#{assignmentManager.init()}" type="preRenderView" />
+		</f:metadata>
 		<h2>#{messages.viewTask}</h2>
 		<h:form id="base">
+			#{messages.project}
+			
+			<h:panelGrid columns="3">
+				#{messages.name}
+				<p:inputText id="name" value="#{assignmentManager.dto.title}"
+					required="true">
+					<f:validateLength minimum="2" />
+				</p:inputText>
+				<p:message for="name" />
 
-			<table border="1">
-				<thead>
-					<td>#{messages.project}</td>
-				</thead>
-				<tr>
-					<td class="columnAlignTop">#{messages.name}</td>
-					<td><p:inputText value="#{assignmentManager.dto.title}" /></td>
-				</tr>
-				<tr>
-					<td class="columnAlignTop">#{messages.description}</td>
-					<td><p:inputText value="#{assignmentManager.dto.description}" /></td>
-				</tr>
-				<tr>
-					<td class="columnAlignTop">#{messages.targets}</td>
-					<td><p:inputText value="#{assignmentManager.dto.goals}" /></td>
-				</tr>
-				<tr>
-					<td class="columnAlignTop">#{messages.workloadEstimation}<em>h</em></td>
-					<td><p:inputText
-							value="#{assignmentManager.dto.workIntensity}" /></td>
-				</tr>
+				#{messages.description}
+				<p:inputText id="description" value="#{assignmentManager.dto.description}">
+					<f:validateLength minimum="2" />
+				</p:inputText>
+				<p:message for="description" />
 
-				<tr>
-					<td class="columnAlignTop">#{messages.desiredOutputs}</td>
-					<td><p:inputText value="#{assignmentManager.dto.outputs}" /></td>
-				</tr>
-				<tr>
-					<td class="columnAlignTop">#{messages.validFrom}</td>
-					<td><p:calendar value="#{assignmentManager.dto.validFrom}"
-							 /></td>
-				</tr>
-				<tr>
-					<td class="columnAlignTop">#{messages.validTo}</td>
-					<td><p:calendar value="#{assignmentManager.dto.validTo}"
-							/></td>
-				</tr>
-				<tr>
-					<td class="columnAlignTop">#{messages.logonDeadline}</td>
-					<td><p:calendar
-							value="#{assignmentManager.dto.registrationEnd}" /></td>
-				</tr>
-				<tr>
-					<td class="columnAlignTop">#{messages.project}</td>
-					<td><p:inputText value="#{assignmentManager.dto.project.name}" /></td>
-				</tr>
-				<tr>
-					<td class="columnAlignTop">#{messages.nominatedSubject}</td>
-					<td><p:inputText value="#{assignmentManager.dto.subjects}" /></td>
-				</tr>
-				<tr>
-					<td class="columnAlignTop">#{messages.sources}</td>
-					<td><p:inputText value="#{assignmentManager.dto.sources}" /></td>
-				</tr>
-				<tr>
-					<td><p:commandButton
-							actionListener="#{assignmentManager.save}" value="Save" ajax="false" /></td>
-				</tr>
-			</table>
+				#{messages.targets}
+				<p:inputText id="targets" value="#{assignmentManager.dto.goals}">
+					<f:validateLength minimum="2" />
+				</p:inputText>
+				<p:message for="targets" />
+					
+				#{messages.workloadEstimation}<em>h</em>
+				<p:inputText id="workIntesity" value="#{assignmentManager.dto.workIntensity}">
+					<f:validateLongRange minimum="1" />
+				</p:inputText>
+				<p:message for="workIntesity" />
+					
+				#{messages.desiredOutputs}
+				<p:inputText id="outputs" value="#{assignmentManager.dto.outputs}">
+					<f:validateLength minimum="2" />
+				</p:inputText>
+				<p:message for="outputs" />
+					
+				#{messages.validFrom}
+				<p:calendar id="validFrom" value="#{assignmentManager.dto.validFrom}"
+					required="true" />
+				<p:message for="validFrom" />
+
+				#{messages.validTo}
+				<p:calendar id="validTo" value="#{assignmentManager.dto.validTo}"
+					required="true" />
+				<p:message for="validTo" />
+					
+				#{messages.logonDeadline}
+				<p:calendar id="registrationEnd" value="#{assignmentManager.dto.registrationEnd}"
+					required="true" />
+				<p:message for="registrationEnd" />
+					
+				#{messages.project}
+				<p:inputText id="projectName" value="#{assignmentManager.dto.project.name}">
+					<f:validateLength minimum="2" />
+				</p:inputText>
+				<p:message for="projectName" />
+					
+				#{messages.nominatedSubject}
+				<p:inputText id="subjects" value="#{assignmentManager.dto.subjects}">
+					<f:validateLength minimum="2" />
+				</p:inputText>
+				<p:message for="subjects" />
+					
+				#{messages.sources}
+				<p:inputText id="sources" value="#{assignmentManager.dto.sources}">
+					<f:validateLength minimum="2" />
+				</p:inputText>
+				<p:message for="sources" />
+
+			</h:panelGrid>
+			<p:commandButton action="#{assignmentManager.save}" value="Save"
+				ajax="false" />
 		</h:form>
 	</f:view>
 

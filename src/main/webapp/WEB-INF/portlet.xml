@@ -30,19 +30,6 @@
 			<short-title>ApplyForAssignmentPortlet</short-title>
 			<keywords>JSF 2.0</keywords>
 		</portlet-info>
-
-		<security-role-ref>
-			<role-name>administrator</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>guest</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>power-user</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>user</role-name>
-		</security-role-ref>
 		<supported-public-render-parameter>assignmentId</supported-public-render-parameter>
 	</portlet>
 
@@ -86,7 +73,7 @@
 			<value>/edits/AssignmentManager/edit.xhtml</value>
 		</init-param>
 		<init-param>
-			<name>javax.portlet.faces.defaultViewId.asdf</name>
+			<name>javax.portlet.faces.defaultViewId.help</name>
 			<value>/helps/AssignmentManager/help.xhtml</value>
 		</init-param>
 
@@ -108,25 +95,38 @@
 
 		<portlet-preferences>
 			<preference>
-				<name>defaultAssignmentsCount</name>
-				<value>10</value>
+				<name>greeting</name>
+				<value>Hello</value>
 			</preference>
 		</portlet-preferences>
-		
-		<security-role-ref>
-			<role-name>administrator</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>guest</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>power-user</role-name>
-		</security-role-ref>
-		<security-role-ref>
-			<role-name>user</role-name>
-		</security-role-ref>
 		<supported-public-render-parameter>assignmentId</supported-public-render-parameter>
 	</portlet>
+
+	<portlet>
+		<portlet-name>ChatPortlet</portlet-name>
+		<display-name>ChatPortlet</display-name>
+		<portlet-class>javax.portlet.faces.GenericFacesPortlet</portlet-class>
+
+		<init-param>
+			<name>javax.portlet.faces.defaultViewId.view</name>
+			<value>/views/Chat/view.xhtml</value>
+		</init-param>
+		<supports>
+			<mime-type>text/html</mime-type>
+			<portlet-mode>view</portlet-mode>
+		</supports>
+
+		<supported-locale>en</supported-locale>
+		<supported-locale>cs</supported-locale>
+
+		<portlet-info>
+			<title>ChatPortlet</title>
+			<short-title>ChatPortlet</short-title>
+			<keywords>JSF 2.0</keywords>
+		</portlet-info>
+
+	</portlet>
+
 	<public-render-parameter>
 		<identifier>assignmentId</identifier>
 		<qname xmlns:l="http://fit.cvut.cz">l:assignmentId</qname>
